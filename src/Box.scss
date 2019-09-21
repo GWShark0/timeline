@@ -1,0 +1,26 @@
+.box {
+  position: absolute;
+  top: 10px;
+  left: 50px;
+  width: 200px;
+  height: 40px;
+  background-color: #9e9e9e;
+}
+
+.box__handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 30px;
+  height: 30px;
+  // cursor: ew-resize;
+}
+
+.box__handle[data-position="left"] {
+  left: 0;
+}
+
+.box__handle[data-position="right"] {
+  right: 0;
+}
