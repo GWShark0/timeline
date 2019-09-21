@@ -10,7 +10,6 @@ function Box() {
   const [left, setLeft] = useState(50);
   const [width, setWidth] = useState(200);
 
-
   const onDragStart = (event) => {
     setPosition(event.target.dataset.position);
   };
@@ -19,17 +18,15 @@ function Box() {
     const { deltaX } = data;
 
     if (position === 'left') {
-      if (width - deltaX > 60) {
+      if (width - deltaX > 60 && left + deltaX > 0) {
         setLeft(left + deltaX);
         setWidth(width - deltaX);
       }
-
     } else if (position === 'right') {
-      setWidth(clamp(width + deltaX, 60, Infinity));
+      setWidth(clamp(width + deltaX, 60, 900 - left));
     } else {
-      setLeft(left + deltaX);
+      setLeft(clamp(left + deltaX, 0, 900 - width));
     }
-
   };
 
   const onDragStop = () => {
