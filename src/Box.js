@@ -36,7 +36,6 @@ function Box() {
   const style = { left, width };
 
   return (
-
     <DraggableCore
       onStart={onDragStart}
       onDrag={onDrag}
@@ -44,13 +43,9 @@ function Box() {
       handle=".box__handle"
     >
       <div className="box" style={style}>
-        <div className="box__handle" data-position="left">
-          <DragHandle />
-        </div>
+        <div className="box__handle" data-position="left" />
         <div className="box__handle" data-position="center" />
-        <div className="box__handle" data-position="right">
-          <DragHandle />
-        </div>
+        <div className="box__handle" data-position="right" />
       </div>
     </DraggableCore>
 
