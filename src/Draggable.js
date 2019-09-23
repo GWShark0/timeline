@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { DraggableCore } from 'react-draggable';
 import clamp from 'lodash/clamp';
 
+const MIN_SIZE = 60;
+
 function calculateClampedValue(value, delta, slack, min, max) {
   return clamp(value + delta + slack, min, max);
 }
@@ -11,7 +13,14 @@ function calculateSlack(value, delta, slack, clampedValue) {
 }
 
 function Draggable(props) {
-  const { children, left, right, onDrag: setDrag } = props;
+  const {
+    left,
+    right,
+    min,
+    max,
+    onDrag: setDrag,
+    children,
+  } = props;
   const [position, setPosition] = useState('');
   const [leftSlack, setLeftSlack] = useState(0);
   const [rightSlack, setRightSlack] = useState(0);
@@ -26,8 +35,8 @@ function Draggable(props) {
     const { deltaX } = data;
 
     if (position === 'left') {
-      const leftMin = 0;
-      const leftMax = right - 60;
+      const leftMin = min;
+      const leftMax = right - MIN_SIZE;
 
       const clampedLeft = calculateClampedValue(left, deltaX, leftSlack, leftMin, leftMax);
       const newLeftSlack = calculateSlack(left, deltaX, leftSlack, clampedLeft);
@@ -37,8 +46,8 @@ function Draggable(props) {
     }
 
     if (position === 'right') {
-      const rightMin = left + 60;
-      const rightMax = 900;
+      const rightMin = left + MIN_SIZE;
+      const rightMax = max;
 
       const clampedRight = calculateClampedValue(right, deltaX, rightSlack, rightMin, rightMax);
       const newRightSlack = calculateSlack(right, deltaX, rightSlack, clampedRight);
@@ -48,10 +57,10 @@ function Draggable(props) {
     }
 
     if (position === 'center') {
-      const leftMin = 0;
-      const leftMax = 900 - width;
-      const rightMin = 0 + width;
-      const rightMax = 900;
+      const leftMin = min;
+      const leftMax = max - width;
+      const rightMin = min + width;
+      const rightMax = max;
 
       const clampedLeft = calculateClampedValue(left, deltaX, leftSlack, leftMin, leftMax);
       const newLeftSlack = calculateSlack(left, deltaX, leftSlack, clampedLeft);
