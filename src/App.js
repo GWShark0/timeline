@@ -1,14 +1,12 @@
 import React from 'react';
-import Box from './Box';
+import Timeline from './Timeline';
 
 import './App.scss';
 
 function App() {
   return (
     <div className="app">
-      <div className="container">
-        <Box />
-      </div>
+      <Timeline />
     </div>
   );
 }
