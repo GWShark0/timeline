@@ -11,10 +11,8 @@ function calculateSlack(value, delta, slack, clampedValue) {
 }
 
 function Draggable(props) {
-  const { children } = props;
+  const { children, left, right, onDrag: setDrag } = props;
   const [position, setPosition] = useState('');
-  const [left, setLeft] = useState(50);
-  const [right, setRight] = useState(250);
   const [leftSlack, setLeftSlack] = useState(0);
   const [rightSlack, setRightSlack] = useState(0);
 
@@ -34,7 +32,7 @@ function Draggable(props) {
       const clampedLeft = calculateClampedValue(left, deltaX, leftSlack, leftMin, leftMax);
       const newLeftSlack = calculateSlack(left, deltaX, leftSlack, clampedLeft);
 
-      setLeft(clampedLeft);
+      setDrag(clampedLeft, right);
       setLeftSlack(newLeftSlack);
     }
 
@@ -45,7 +43,7 @@ function Draggable(props) {
       const clampedRight = calculateClampedValue(right, deltaX, rightSlack, rightMin, rightMax);
       const newRightSlack = calculateSlack(right, deltaX, rightSlack, clampedRight);
 
-      setRight(clampedRight);
+      setDrag(left, clampedRight);
       setRightSlack(newRightSlack);
     }
 
@@ -60,9 +58,8 @@ function Draggable(props) {
       const clampedRight = calculateClampedValue(right, deltaX, rightSlack, rightMin, rightMax);
       const newRightSlack = calculateSlack(right, deltaX, rightSlack, clampedRight);
 
-      setLeft(clampedLeft);
+      setDrag(clampedLeft, clampedRight);
       setLeftSlack(newLeftSlack);
-      setRight(clampedRight);
       setRightSlack(newRightSlack);
     }
   };
@@ -94,5 +91,11 @@ function Draggable(props) {
     </DraggableCore>
   )
 }
+
+Draggable.defaultProps = {
+  left: 0,
+  right: 0,
+  onDrag: () => {},
+};
 
 export default Draggable;
