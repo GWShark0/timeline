@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import './TimelineItem.scss';
 
 function TimelineItem(props) {
-  const { style } = props;
   const node = useRef();
   const [active, setActive] = useState(false);
 
@@ -38,7 +37,6 @@ function TimelineItem(props) {
   return (
     <div
       className={classes}
-      style={style}
       onMouseDown={handleMouseDown}
       ref={node}
     >
